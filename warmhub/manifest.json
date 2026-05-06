@@ -8,6 +8,7 @@
   "shapes": [
     {
       "name": "Certainty",
+      "provisioning": "setup",
       "description": "Veritas certainty about another assertion. This shape is intended for assertions whose about target is itself an assertion. The target assertion must semantically denote a binomial true/false proposition for Veritas to work correctly. The certainty expresses subjective-logic belief, disbelief, uncertainty, optional alpha, and required source Thing for that target assertion.",
       "fields": {
         "belief": {
@@ -38,6 +39,7 @@
     },
     {
       "name": "Support",
+      "provisioning": "setup",
       "description": "Veritas support opinion about another assertion pair. This shape represents the belief that one assertion supports another assertion. It is intended for assertions whose about target is a Pair of assertions, where the first assertion supports the second assertion. Pair direction matters: first -> second. The source field identifies the Thing whose Veritas reputation is wagered by this opinion.",
       "fields": {
         "belief": {
@@ -68,6 +70,7 @@
     },
     {
       "name": "Opposition",
+      "provisioning": "setup",
       "description": "Veritas opposition opinion about another assertion pair. This shape represents the belief that one assertion opposes another assertion. It is intended for assertions whose about target is a Pair of assertions, where the first assertion opposes the second assertion. Pair direction matters: first -> second. The source field identifies the Thing whose Veritas reputation is wagered by this opinion.",
       "fields": {
         "belief": {
@@ -98,6 +101,7 @@
     },
     {
       "name": "Consensus",
+      "provisioning": "setup",
       "description": "Veritas consolidated consensus opinion for a target assertion. This shape is intended for assertions whose about target is the assertion being consolidated. Veritas writes this as its only repo-visible output shape.",
       "fields": {
         "belief": {
@@ -122,6 +126,7 @@
   "credentials": [
     {
       "name": "veritas-webhook",
+      "provisioning": "setup",
       "description": "Repo-local webhook signing secret bound to Veritas subscriptions so the worker can verify WarmHub deliveries.",
       "requiredKeys": [
         {
