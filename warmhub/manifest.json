@@ -146,7 +146,9 @@
         "shape": "Certainty"
       },
       "webhookUrl": "{setup-supplied:/webhook/certainty/<attachedRepoId>}",
-      "credentials": ["veritas-webhook-<org-name>-<repo-name>"]
+      "credentials": [
+        "veritas-webhook-<org-name>-<repo-name>"
+      ]
     },
     {
       "name": "veritas-support",
@@ -156,7 +158,9 @@
         "shape": "Support"
       },
       "webhookUrl": "{setup-supplied:/webhook/support/<attachedRepoId>}",
-      "credentials": ["veritas-webhook-<org-name>-<repo-name>"]
+      "credentials": [
+        "veritas-webhook-<org-name>-<repo-name>"
+      ]
     },
     {
       "name": "veritas-opposition",
@@ -166,14 +170,25 @@
         "shape": "Opposition"
       },
       "webhookUrl": "{setup-supplied:/webhook/opposition/<attachedRepoId>}",
-      "credentials": ["veritas-webhook-<org-name>-<repo-name>"]
+      "credentials": [
+        "veritas-webhook-<org-name>-<repo-name>"
+      ]
     }
   ],
   "seeds": [],
   "health": {
     "requires": {
-      "shapes": ["Certainty", "Support", "Opposition", "Consensus"],
-      "subscriptions": ["veritas-certainty", "veritas-support", "veritas-opposition"]
+      "shapes": [
+        "Certainty",
+        "Support",
+        "Opposition",
+        "Consensus"
+      ],
+      "subscriptions": [
+        "veritas-certainty",
+        "veritas-support",
+        "veritas-opposition"
+      ]
     }
   },
   "teardown": {
@@ -183,7 +198,14 @@
     }
   },
   "runtimeAccess": {
-    "reads": ["Certainty", "Support", "Opposition"],
-    "writes": ["Consensus"]
+    "reads": [
+      "Certainty",
+      "Support",
+      "Opposition",
+      "Pair"
+    ],
+    "writes": [
+      "Consensus"
+    ]
   }
 }
