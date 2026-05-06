@@ -125,7 +125,7 @@
   ],
   "credentials": [
     {
-      "name": "veritas-webhook",
+      "name": "veritas-webhook-<org-name>-<repo-name>",
       "provisioning": "setup",
       "description": "Repo-local webhook signing secret bound to Veritas subscriptions so the worker can verify WarmHub deliveries.",
       "requiredKeys": [
@@ -146,7 +146,7 @@
         "shape": "Certainty"
       },
       "webhookUrl": "{setup-supplied:/webhook/certainty/<attachedRepoId>}",
-      "credentials": ["veritas-webhook"]
+      "credentials": ["veritas-webhook-<org-name>-<repo-name>"]
     },
     {
       "name": "veritas-support",
@@ -156,7 +156,7 @@
         "shape": "Support"
       },
       "webhookUrl": "{setup-supplied:/webhook/support/<attachedRepoId>}",
-      "credentials": ["veritas-webhook"]
+      "credentials": ["veritas-webhook-<org-name>-<repo-name>"]
     },
     {
       "name": "veritas-opposition",
@@ -166,7 +166,7 @@
         "shape": "Opposition"
       },
       "webhookUrl": "{setup-supplied:/webhook/opposition/<attachedRepoId>}",
-      "credentials": ["veritas-webhook"]
+      "credentials": ["veritas-webhook-<org-name>-<repo-name>"]
     }
   ],
   "seeds": [],
