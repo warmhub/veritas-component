@@ -1,0 +1,184 @@
+{
+  "$schema": "https://warmhub.dev/schema/component-manifest.v1.json",
+  "component": {
+    "id": "com.warmhub.Veritas",
+    "name": "veritas",
+    "version": "1.0.0"
+  },
+  "shapes": [
+    {
+      "name": "Certainty",
+      "description": "Veritas certainty about another assertion. This shape is intended for assertions whose about target is itself an assertion. The target assertion must semantically denote a binomial true/false proposition for Veritas to work correctly. The certainty expresses subjective-logic belief, disbelief, uncertainty, optional alpha, and required source Thing for that target assertion.",
+      "fields": {
+        "belief": {
+          "type": "number",
+          "description": "Subjective-logic belief that the target assertion is true."
+        },
+        "disbelief": {
+          "type": "number",
+          "description": "Subjective-logic disbelief that the target assertion is true."
+        },
+        "uncertainty": {
+          "type": "number",
+          "description": "Residual uncertainty about the truth of the target assertion."
+        },
+        "alpha": {
+          "type": "number?",
+          "description": "Optional base rate for the target assertion. Veritas treats omitted alpha as 0.5."
+        },
+        "source": {
+          "type": "wref",
+          "description": "Required source Thing whose Veritas reputation is wagered by this certainty."
+        },
+        "rationale": {
+          "type": "string?",
+          "description": "Optional freeform text explaining why this certainty was assigned."
+        }
+      }
+    },
+    {
+      "name": "Support",
+      "description": "Veritas support opinion about another assertion pair. This shape represents the belief that one assertion supports another assertion. It is intended for assertions whose about target is a Pair of assertions, where the first assertion supports the second assertion. Pair direction matters: first -> second. The source field identifies the Thing whose Veritas reputation is wagered by this opinion.",
+      "fields": {
+        "belief": {
+          "type": "number",
+          "description": "Subjective-logic belief that the first assertion in the Pair supports the second assertion."
+        },
+        "disbelief": {
+          "type": "number",
+          "description": "Subjective-logic disbelief that the first assertion in the Pair supports the second assertion."
+        },
+        "uncertainty": {
+          "type": "number",
+          "description": "Residual uncertainty about whether the first assertion in the Pair supports the second assertion."
+        },
+        "alpha": {
+          "type": "number?",
+          "description": "Optional base rate for the support relation. Veritas treats omitted alpha as 0.5."
+        },
+        "source": {
+          "type": "wref",
+          "description": "Required source Thing whose Veritas reputation is wagered by this support opinion."
+        },
+        "rationale": {
+          "type": "string?",
+          "description": "Optional freeform text explaining why this support opinion was assigned."
+        }
+      }
+    },
+    {
+      "name": "Opposition",
+      "description": "Veritas opposition opinion about another assertion pair. This shape represents the belief that one assertion opposes another assertion. It is intended for assertions whose about target is a Pair of assertions, where the first assertion opposes the second assertion. Pair direction matters: first -> second. The source field identifies the Thing whose Veritas reputation is wagered by this opinion.",
+      "fields": {
+        "belief": {
+          "type": "number",
+          "description": "Subjective-logic belief that the first assertion in the Pair opposes the second assertion."
+        },
+        "disbelief": {
+          "type": "number",
+          "description": "Subjective-logic disbelief that the first assertion in the Pair opposes the second assertion."
+        },
+        "uncertainty": {
+          "type": "number",
+          "description": "Residual uncertainty about whether the first assertion in the Pair opposes the second assertion."
+        },
+        "alpha": {
+          "type": "number?",
+          "description": "Optional base rate for the opposition relation. Veritas treats omitted alpha as 0.5."
+        },
+        "source": {
+          "type": "wref",
+          "description": "Required source Thing whose Veritas reputation is wagered by this opposition opinion."
+        },
+        "rationale": {
+          "type": "string?",
+          "description": "Optional freeform text explaining why this opposition opinion was assigned."
+        }
+      }
+    },
+    {
+      "name": "Consensus",
+      "description": "Veritas consolidated consensus opinion for a target assertion. This shape is intended for assertions whose about target is the assertion being consolidated. Veritas writes this as its only repo-visible output shape.",
+      "fields": {
+        "belief": {
+          "type": "number",
+          "description": "Veritas consolidated subjective-logic belief for the target assertion."
+        },
+        "disbelief": {
+          "type": "number",
+          "description": "Veritas consolidated subjective-logic disbelief for the target assertion."
+        },
+        "uncertainty": {
+          "type": "number",
+          "description": "Residual uncertainty after Veritas consolidation."
+        },
+        "alpha": {
+          "type": "number?",
+          "description": "Optional base rate for the consolidated opinion. Veritas treats omitted alpha as 0.5."
+        }
+      }
+    }
+  ],
+  "credentials": [
+    {
+      "name": "veritas-webhook",
+      "description": "Repo-local webhook signing secret bound to Veritas subscriptions so the worker can verify WarmHub deliveries.",
+      "requiredKeys": [
+        {
+          "key": "WEBHOOK_SIGNING_SECRET",
+          "description": "Shared secret WarmHub uses to sign webhook deliveries sent to the Veritas worker."
+        }
+      ]
+    }
+  ],
+  "actions": [],
+  "subscriptions": [
+    {
+      "name": "veritas-certainty",
+      "provisioning": "setup",
+      "trigger": {
+        "kind": "event",
+        "shape": "Certainty"
+      },
+      "webhookUrl": "{setup-supplied:/webhook/certainty/<attachedRepoId>}",
+      "credentials": ["veritas-webhook"]
+    },
+    {
+      "name": "veritas-support",
+      "provisioning": "setup",
+      "trigger": {
+        "kind": "event",
+        "shape": "Support"
+      },
+      "webhookUrl": "{setup-supplied:/webhook/support/<attachedRepoId>}",
+      "credentials": ["veritas-webhook"]
+    },
+    {
+      "name": "veritas-opposition",
+      "provisioning": "setup",
+      "trigger": {
+        "kind": "event",
+        "shape": "Opposition"
+      },
+      "webhookUrl": "{setup-supplied:/webhook/opposition/<attachedRepoId>}",
+      "credentials": ["veritas-webhook"]
+    }
+  ],
+  "seeds": [],
+  "health": {
+    "requires": {
+      "shapes": ["Certainty", "Support", "Opposition", "Consensus"],
+      "subscriptions": ["veritas-certainty", "veritas-support", "veritas-opposition"]
+    }
+  },
+  "teardown": {
+    "subscriptions": {
+      "onDisable": "pause",
+      "onUninstall": "pause"
+    }
+  },
+  "runtimeAccess": {
+    "reads": ["Certainty", "Support", "Opposition"],
+    "writes": ["Consensus"]
+  }
+}
