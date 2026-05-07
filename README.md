@@ -21,7 +21,7 @@ This manifest is written for the GH-2328 end state:
 - The three Veritas subscriptions are marked `provisioning: "setup"` so the worker can create install-specific webhook URLs containing its own attached/install identifier.
 - The repo-local `veritas-webhook` credential set is created by the standard manifest installer.
 - `runtimeAccess` declares the future minted runtime token scope:
-  - reads: `Certainty`, `Support`, `Opposition`
+  - reads: `Certainty`, `Support`, `Opposition`, `Consensus`, `Pair`
   - writes: `Consensus`
 
 ## Registration target
