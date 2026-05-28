@@ -127,11 +127,15 @@
     {
       "name": "veritas-webhook-<org-name>-<repo-name>",
       "provisioning": "setup",
-      "description": "Repo-local webhook signing secret bound to Veritas subscriptions so the worker can verify WarmHub deliveries.",
+      "description": "Shared secrets the Veritas worker uses to verify WarmHub webhook deliveries and authenticate component CLI dispatch calls.",
       "requiredKeys": [
         {
           "key": "WEBHOOK_SIGNING_SECRET",
           "description": "Shared secret WarmHub uses to sign webhook deliveries sent to the Veritas worker."
+        },
+        {
+          "key": "CLI_SIGNING_SECRET",
+          "description": "Shared secret used to authenticate component CLI dispatch calls to the Veritas worker."
         }
       ]
     }
@@ -203,10 +207,116 @@
       "Support",
       "Opposition",
       "Consensus",
-      "Pair"
+      "Pair",
+      "ComponentConfig"
     ],
     "writes": [
-      "Consensus"
+      "Consensus",
+      "ComponentConfig"
+    ]
+  },
+  "cli": {
+    "description": "Read and adjust Veritas source reputations from the install repo.",
+    "methods": [
+      {
+        "name": "list-reputations",
+        "description": "List Veritas source reputations, optionally filtered by scope. Cursor-paginated.",
+        "method": "GET",
+        "path": "reputations",
+        "credentialSet": "veritas-webhook-<org-name>-<repo-name>",
+        "requiresPermission": "repo:read",
+        "args": [
+          {
+            "name": "scope",
+            "type": "string",
+            "required": false,
+            "description": "Restrict to reputations held under this scope. Omit to list across all scopes."
+          },
+          {
+            "name": "limit",
+            "type": "integer",
+            "required": false,
+            "default": 50,
+            "min": 1,
+            "max": 500,
+            "description": "Maximum reputations to return in one page."
+          },
+          {
+            "name": "cursor",
+            "type": "string",
+            "required": false,
+            "description": "Opaque pagination cursor from a previous response's nextCursor."
+          }
+        ]
+      },
+      {
+        "name": "get-reputation",
+        "description": "Get a single Veritas source reputation by wref and scope. Returns a default-uncertainty opinion when none has been recorded.",
+        "method": "GET",
+        "path": "reputation",
+        "credentialSet": "veritas-webhook-<org-name>-<repo-name>",
+        "requiresPermission": "repo:read",
+        "args": [
+          {
+            "name": "wref",
+            "type": "string",
+            "required": true,
+            "description": "Source Thing wref whose reputation to read (e.g. Person/alice)."
+          },
+          {
+            "name": "scope",
+            "type": "string",
+            "required": true,
+            "description": "Scope the reputation is held under."
+          }
+        ]
+      },
+      {
+        "name": "upsert-reputation",
+        "description": "Create or replace a Veritas source reputation for a wref + scope. belief, disbelief, and uncertainty must each be in [0, 1] and sum to 1.",
+        "method": "PUT",
+        "path": "reputation",
+        "credentialSet": "veritas-webhook-<org-name>-<repo-name>",
+        "requiresPermission": "repo:write",
+        "args": [
+          {
+            "name": "wref",
+            "type": "string",
+            "required": true,
+            "description": "Source Thing wref whose reputation to set."
+          },
+          {
+            "name": "scope",
+            "type": "string",
+            "required": true,
+            "description": "Scope the reputation is held under."
+          },
+          {
+            "name": "belief",
+            "type": "number",
+            "required": true,
+            "min": 0,
+            "max": 1,
+            "description": "Subjective-logic belief mass in [0, 1]."
+          },
+          {
+            "name": "disbelief",
+            "type": "number",
+            "required": true,
+            "min": 0,
+            "max": 1,
+            "description": "Subjective-logic disbelief mass in [0, 1]."
+          },
+          {
+            "name": "uncertainty",
+            "type": "number",
+            "required": true,
+            "min": 0,
+            "max": 1,
+            "description": "Subjective-logic uncertainty mass in [0, 1]."
+          }
+        ]
+      }
     ]
   }
 }
