@@ -1,7 +1,7 @@
 {
   "id": "com.warmhub.Veritas",
   "name": "veritas",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Subjective Logic consensus computation for WarmHub assertions and relations.",
   "author": "WarmHub",
   "tags": ["veritas", "subjective-logic", "consensus"]

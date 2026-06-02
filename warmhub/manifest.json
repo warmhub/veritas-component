@@ -3,7 +3,7 @@
   "component": {
     "id": "com.warmhub.Veritas",
     "name": "veritas",
-    "version": "1.0.0"
+    "version": "1.1.0"
   },
   "shapes": [
     {
@@ -121,6 +121,25 @@
           "description": "Optional base rate for the consolidated opinion. Veritas treats omitted alpha as 0.5."
         }
       }
+    },
+    {
+      "name": "Oracle",
+      "provisioning": "setup",
+      "description": "Veritas oracle source. Certainty, Support, and Opposition assertions whose source is an Oracle/* thing use a fixed, unlearnable max-trust reputation rather than normal reputation learning.",
+      "fields": {
+        "displayName": {
+          "type": "string?",
+          "description": "Optional human-readable name for this Veritas oracle."
+        },
+        "description": {
+          "type": "string?",
+          "description": "Optional description of the oracle source and the ground-truth authority it represents."
+        },
+        "owner": {
+          "type": "wref?",
+          "description": "Optional owner responsible for the oracle source in this repo."
+        }
+      }
     }
   ],
   "credentials": [
@@ -186,7 +205,8 @@
         "Certainty",
         "Support",
         "Opposition",
-        "Consensus"
+        "Consensus",
+        "Oracle"
       ],
       "subscriptions": [
         "veritas-certainty",
@@ -208,7 +228,8 @@
       "Opposition",
       "Consensus",
       "Pair",
-      "ComponentConfig"
+      "ComponentConfig",
+      "Oracle"
     ],
     "writes": [
       "Consensus",
