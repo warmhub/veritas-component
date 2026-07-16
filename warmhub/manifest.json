@@ -3,7 +3,7 @@
   "component": {
     "id": "com.warmhub.Veritas",
     "name": "veritas",
-    "version": "1.1.0"
+    "version": "1.2.0"
   },
   "shapes": [
     {
@@ -228,6 +228,7 @@
       "Opposition",
       "Consensus",
       "Pair",
+      "Arc",
       "ComponentConfig",
       "Oracle"
     ],
