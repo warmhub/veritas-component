@@ -3,7 +3,7 @@
   "component": {
     "id": "com.warmhub.Veritas",
     "name": "veritas",
-    "version": "1.2.0"
+    "version": "1.2.1"
   },
   "shapes": [
     {
@@ -40,19 +40,19 @@
     {
       "name": "Support",
       "provisioning": "setup",
-      "description": "Veritas support opinion about another assertion pair. This shape represents the belief that one assertion supports another assertion. It is intended for assertions whose about target is a Pair of assertions, where the first assertion supports the second assertion. Pair direction matters: first -> second. The source field identifies the Thing whose Veritas reputation is wagered by this opinion.",
+      "description": "Veritas support opinion about a directed relationship between two assertions. The about target must be an Arc or legacy Pair. Arc support is directed from -> to; legacy Pair support is directed first -> second. Bond is symmetric and is not accepted; model directed support with an Arc. The source field identifies the Thing whose Veritas reputation is wagered by this opinion.",
       "fields": {
         "belief": {
           "type": "number",
-          "description": "Subjective-logic belief that the first assertion in the Pair supports the second assertion."
+          "description": "Subjective-logic belief that the Arc from assertion supports its to assertion or the legacy Pair first assertion supports its second assertion."
         },
         "disbelief": {
           "type": "number",
-          "description": "Subjective-logic disbelief that the first assertion in the Pair supports the second assertion."
+          "description": "Subjective-logic disbelief in the support relationship expressed by the target Arc or legacy Pair."
         },
         "uncertainty": {
           "type": "number",
-          "description": "Residual uncertainty about whether the first assertion in the Pair supports the second assertion."
+          "description": "Residual uncertainty about the support relationship expressed by the target Arc or legacy Pair."
         },
         "alpha": {
           "type": "number?",
@@ -71,19 +71,19 @@
     {
       "name": "Opposition",
       "provisioning": "setup",
-      "description": "Veritas opposition opinion about another assertion pair. This shape represents the belief that one assertion opposes another assertion. It is intended for assertions whose about target is a Pair of assertions, where the first assertion opposes the second assertion. Pair direction matters: first -> second. The source field identifies the Thing whose Veritas reputation is wagered by this opinion.",
+      "description": "Veritas opposition opinion about a directed relationship between two assertions. The about target must be an Arc or legacy Pair. Arc opposition is directed from -> to; legacy Pair opposition is directed first -> second. Bond is symmetric and is not accepted; model directed opposition with an Arc. The source field identifies the Thing whose Veritas reputation is wagered by this opinion.",
       "fields": {
         "belief": {
           "type": "number",
-          "description": "Subjective-logic belief that the first assertion in the Pair opposes the second assertion."
+          "description": "Subjective-logic belief that the Arc from assertion opposes its to assertion or the legacy Pair first assertion opposes its second assertion."
         },
         "disbelief": {
           "type": "number",
-          "description": "Subjective-logic disbelief that the first assertion in the Pair opposes the second assertion."
+          "description": "Subjective-logic disbelief in the opposition relationship expressed by the target Arc or legacy Pair."
         },
         "uncertainty": {
           "type": "number",
-          "description": "Residual uncertainty about whether the first assertion in the Pair opposes the second assertion."
+          "description": "Residual uncertainty about the opposition relationship expressed by the target Arc or legacy Pair."
         },
         "alpha": {
           "type": "number?",
