@@ -3,7 +3,7 @@
   "component": {
     "id": "com.warmhub.Veritas",
     "name": "veritas",
-    "version": "1.2.1"
+    "version": "1.3.0"
   },
   "shapes": [
     {
@@ -196,6 +196,42 @@
       "credentials": [
         "veritas-webhook-<org-name>-<repo-name>"
       ]
+    },
+    {
+      "name": "veritas-thing-renamed",
+      "provisioning": "setup",
+      "trigger": {
+        "kind": "event",
+        "event": "thing.renamed"
+      },
+      "webhookUrl": "{setup-supplied:/webhook/lifecycle/<attachedRepoId>}",
+      "credentials": [
+        "veritas-webhook-<org-name>-<repo-name>"
+      ]
+    },
+    {
+      "name": "veritas-shape-renamed",
+      "provisioning": "setup",
+      "trigger": {
+        "kind": "event",
+        "event": "shape.renamed"
+      },
+      "webhookUrl": "{setup-supplied:/webhook/lifecycle/<attachedRepoId>}",
+      "credentials": [
+        "veritas-webhook-<org-name>-<repo-name>"
+      ]
+    },
+    {
+      "name": "veritas-repo-renamed",
+      "provisioning": "setup",
+      "trigger": {
+        "kind": "event",
+        "event": "repo.renamed"
+      },
+      "webhookUrl": "{setup-supplied:/webhook/lifecycle/<attachedRepoId>}",
+      "credentials": [
+        "veritas-webhook-<org-name>-<repo-name>"
+      ]
     }
   ],
   "seeds": [],
@@ -211,7 +247,10 @@
       "subscriptions": [
         "veritas-certainty",
         "veritas-support",
-        "veritas-opposition"
+        "veritas-opposition",
+        "veritas-thing-renamed",
+        "veritas-shape-renamed",
+        "veritas-repo-renamed"
       ]
     }
   },
