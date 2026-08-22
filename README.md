@@ -34,8 +34,8 @@ above; the worker verifies the canonical-request HMAC.
 | Command | Verb | Route | Args | Requires |
 |---------|------|-------|------|----------|
 | `list-reputations` | `GET` | `/reputations` | `scope?`, `limit?` (1–500, default 50), `cursor?` | `repo:read` |
-| `get-reputation` | `GET` | `/reputation` | `wref`, `scope` | `repo:read` |
-| `upsert-reputation` | `PUT` | `/reputation` | `wref`, `scope`, `belief`, `disbelief`, `uncertainty` (each in [0, 1], summing to 1) | `repo:write` |
+| `get-reputation` | `GET` | `/reputation` | `durable-id`, `scope` | `repo:read` |
+| `upsert-reputation` | `PUT` | `/reputation` | `durable-id`, `scope`, `belief`, `disbelief`, `uncertainty` (each in [0, 1], summing to 1) | `repo:write` |
 
 Routes are decoupled from the command names via each method's `path` field, which is
 why `get-reputation` and `upsert-reputation` can share `/reputation` (distinguished by

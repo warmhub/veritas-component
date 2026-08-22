@@ -3,7 +3,7 @@
   "component": {
     "id": "com.warmhub.Veritas",
     "name": "veritas",
-    "version": "1.4.0"
+    "version": "1.4.1"
   },
   "shapes": [
     {
@@ -141,7 +141,7 @@
     {
       "name": "Oracle",
       "provisioning": "setup",
-      "description": "Veritas oracle source. Certainty, Support, and Opposition assertions whose source is an Oracle/* thing use a fixed, unlearnable max-trust reputation rather than normal reputation learning.",
+      "description": "Veritas oracle source. Certainty, Support, and Opposition assertions whose source is a thing with the Oracle shape use a fixed, unlearnable max-trust reputation rather than normal reputation learning.",
       "fields": {
         "displayName": {
           "type": "string?",
@@ -328,17 +328,17 @@
       },
       {
         "name": "get-reputation",
-        "description": "Get a single Veritas source reputation by wref and scope. Returns a default-uncertainty opinion when none has been recorded.",
+        "description": "Get a single Veritas source reputation by durable ID and scope. Returns a default-uncertainty opinion when none has been recorded.",
         "method": "GET",
         "path": "reputation",
         "credentialSet": "veritas-webhook-<org-name>-<repo-name>",
         "requiresPermission": "repo:read",
         "args": [
           {
-            "name": "wref",
+            "name": "durable-id",
             "type": "string",
             "required": true,
-            "description": "Source Thing wref whose reputation to read (e.g. Person/alice)."
+            "description": "Source Thing durable ID whose reputation to read. Do not pass a label wref."
           },
           {
             "name": "scope",
@@ -350,17 +350,17 @@
       },
       {
         "name": "upsert-reputation",
-        "description": "Create or replace a Veritas source reputation for a wref + scope. belief, disbelief, and uncertainty must each be in [0, 1] and sum to 1.",
+        "description": "Create or replace a Veritas source reputation for a durable ID + scope. belief, disbelief, and uncertainty must each be in [0, 1] and sum to 1.",
         "method": "PUT",
         "path": "reputation",
         "credentialSet": "veritas-webhook-<org-name>-<repo-name>",
         "requiresPermission": "repo:write",
         "args": [
           {
-            "name": "wref",
+            "name": "durable-id",
             "type": "string",
             "required": true,
-            "description": "Source Thing wref whose reputation to set."
+            "description": "Source Thing durable ID whose reputation to set. Do not pass a label wref."
           },
           {
             "name": "scope",
