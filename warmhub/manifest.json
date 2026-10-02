@@ -3,12 +3,15 @@
   "component": {
     "id": "com.warmhub.Veritas",
     "name": "veritas",
-    "version": "1.4.1"
+    "version": "1.5.0"
   },
   "shapes": [
     {
       "name": "Certainty",
       "provisioning": "setup",
+      "composes": [
+        "Assertion"
+      ],
       "description": "Veritas certainty about another assertion. This shape is intended for assertions whose about target is itself an assertion. The target assertion must semantically denote a binomial true/false proposition for Veritas to work correctly. The certainty expresses subjective-logic belief, disbelief, uncertainty, optional alpha, and required source Thing for that target assertion.",
       "fields": {
         "belief": {
@@ -44,6 +47,9 @@
     {
       "name": "Support",
       "provisioning": "setup",
+      "composes": [
+        "Assertion"
+      ],
       "description": "Veritas support opinion about a directed relationship between two assertions. The about target must be an Arc or legacy Pair. Arc support is directed from -> to; legacy Pair support is directed first -> second. Bond is symmetric and is not accepted; model directed support with an Arc. The source field identifies the Thing whose Veritas reputation is wagered by this opinion.",
       "fields": {
         "belief": {
@@ -79,6 +85,9 @@
     {
       "name": "Opposition",
       "provisioning": "setup",
+      "composes": [
+        "Assertion"
+      ],
       "description": "Veritas opposition opinion about a directed relationship between two assertions. The about target must be an Arc or legacy Pair. Arc opposition is directed from -> to; legacy Pair opposition is directed first -> second. Bond is symmetric and is not accepted; model directed opposition with an Arc. The source field identifies the Thing whose Veritas reputation is wagered by this opinion.",
       "fields": {
         "belief": {
@@ -114,6 +123,9 @@
     {
       "name": "Consensus",
       "provisioning": "setup",
+      "composes": [
+        "Assertion"
+      ],
       "description": "Veritas consolidated consensus opinion for a target assertion. This shape is intended for assertions whose about target is the assertion being consolidated. Veritas writes this as its only repo-visible output shape.",
       "fields": {
         "belief": {
